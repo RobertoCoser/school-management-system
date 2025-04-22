@@ -1,17 +1,27 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Students from "./pages/Students";
-import Classes from "./pages/Classes";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { isAuthenticated } from './utils/auth';
+import Navbar from './components/Navbar';
+
+
+// Componente para rotas privadas
+const PrivateRoute = ({ children }) => {
+  return isAuthenticated() ? children : <Navigate to="/" />;
+};
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/students" element={<Students />} />
-        <Route path="/classes" element={<Classes />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Navbar />
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
