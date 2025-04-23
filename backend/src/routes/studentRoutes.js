@@ -1,18 +1,22 @@
-const express = require("express");
+const express = require('express');
 const {
-    createStudent,
     getStudents,
+    createStudent,
     updateStudent,
-    deleteStudent,
-} = require("../controllers/studentController");
-const { protect } = require("../middlewares/authMiddleware");
+    deleteStudent
+} = require('../controllers/studentController');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Rotas protegidas
-router.post("/", protect, createStudent);
-router.get("/", protect, getStudents);
-router.put("/:id", protect, updateStudent);
-router.delete("/:id", protect, deleteStudent);
+router
+    .route('/')
+    .get(getStudents)
+    .post(protect, createStudent);
+
+router
+    .route('/:id')
+    .put(protect, updateStudent)
+    .delete(protect, deleteStudent);
 
 module.exports = router;
