@@ -1,4 +1,4 @@
-import './Loader.css';
+import '.\styles\global.css';
 
 const Loader = () => (
     <div className="loader">

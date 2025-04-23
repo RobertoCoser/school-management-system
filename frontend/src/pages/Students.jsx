@@ -4,7 +4,7 @@ import api from '../services/api';
 import SearchBar from '../components/SearchBar';
 import Pagination from '../components/Pagination';
 import Modal from '../components/Modal';
-import './Students.css';
+import '.\styles\global.css';
 
 const Students = () => {
     const [students, setStudents] = useState([]);

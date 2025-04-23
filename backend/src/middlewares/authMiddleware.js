@@ -1,15 +1,16 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-exports.protect = asyncHandler(async (req, res, next) => {
+exports.protect = async (req, res, next) => {
     let token;
 
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    // Verifica se o cabeçalho de autorização contém o token
+    if (req.headers.authorization?.startsWith('Bearer')) {
         token = req.headers.authorization.split(' ')[1];
     }
 
     if (!token) {
-        return next(new ErrorResponse('Não autorizado', 401));
+        return res.status(401).json({ error: 'Não autorizado. Token ausente.' });
     }
 
     try {
@@ -17,6 +18,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
         req.user = await User.findById(decoded.id);
         next();
     } catch (err) {
-        return next(new ErrorResponse('Não autorizado', 401));
+        res.status(401).json({ error: 'Não autorizado. Token inválido.' });
     }
-});
+};
