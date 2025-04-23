@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import '.\styles\global.css';
+import '../styles/global.css';
 
 const Dashboard = () => (
   <div className="dashboard">

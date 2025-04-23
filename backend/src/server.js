@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const { connectDB } = require('./config');
+const connectDB = require('./config/index'); // Importação corrigida
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 // Configuração de ambiente

@@ -1,15 +1,21 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
-exports.connectDB = async () => {
+const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-        console.log('✅ Conectado ao MongoDB');
-    } catch (err) {
-        console.error(`❌ Erro ao conectar ao MongoDB: ${err.message}`);
+        const conn = await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/school-management-system", {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+        });
+        console.log(`MongoDB conectado: ${conn.connection.host}`);
+    } catch (error) {
+        console.error(`Erro: ${error.message}`);
         process.exit(1);
     }
 };
+
+module.exports = connectDB;
 
 exports.generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
