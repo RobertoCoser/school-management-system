@@ -37,6 +37,21 @@ const Login = () => {
                     required
                 />
                 <button type="submit">Entrar</button>
+                <button
+                    onClick={() => navigate('/register')}
+                    style={{ marginLeft: '10px', background: '#4CAF50' }}
+                >
+                    Registrar
+                </button>
+                <p>
+                    Não tem conta?
+                    <span
+                        style={{ color: 'blue', cursor: 'pointer', marginLeft: '5px' }}
+                        onClick={() => navigate('/register')}
+                    >
+                        Registre-se aqui
+                    </span>
+                </p>
             </form>
         </div>
     );
