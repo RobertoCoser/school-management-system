@@ -6,7 +6,6 @@ const connectDB = async () => {
         const conn = await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/school-management-system", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true,
         });
         console.log(`MongoDB conectado: ${conn.connection.host}`);
     } catch (error) {
