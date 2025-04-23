@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const { connectDB } = require('./config');
-const { errorHandler, notFound } = require('./middlewares/errorMiddleware');
+const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 // Configuração de ambiente
 dotenv.config();
