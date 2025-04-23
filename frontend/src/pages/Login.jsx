@@ -1,51 +1,42 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
-import "./Login.css"; // Importe o CSS
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
+import './Login.css';
 
 const Login = () => {
-    const formik = useFormik({
-        initialValues: { email: "", password: "" },
-        validationSchema: Yup.object({
-            email: Yup.string().email("E-mail inválido").required("Obrigatório"),
-            password: Yup.string().min(6, "Mínimo 6 caracteres").required("Obrigatório"),
-        }),
-        onSubmit: async (values) => {
-            try {
-                const res = await axios.post("http://localhost:5000/api/auth/login", values);
-                localStorage.setItem("token", res.data.token);
-                window.location.href = "/dashboard";
-            } catch (err) {
-                alert("Erro no login!");
-            }
-        },
-    });
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await api.post('/auth/login', { email, password });
+            localStorage.setItem('token', res.data.token);
+            navigate('/dashboard');
+        } catch (err) {
+            alert('Login falhou!');
+        }
+    };
 
     return (
         <div className="login-container">
-            <h1 className="login-title">Login</h1>
-            <form className="login-form" onSubmit={formik.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <input
                     type="email"
-                    name="email"
-                    className="login-input"
-                    placeholder="Seu e-mail"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    required
                 />
-                {formik.errors.email && <p className="login-error">{formik.errors.email}</p>}
-
                 <input
                     type="password"
-                    name="password"
-                    className="login-input"
-                    placeholder="Sua senha"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Senha"
+                    required
                 />
-                {formik.errors.password && <p className="login-error">{formik.errors.password}</p>}
-
-                <button type="submit" className="login-button">Entrar</button>
+                <button type="submit">Entrar</button>
             </form>
         </div>
     );
