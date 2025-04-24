@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const connectDB = require('./config/index'); // Importação corrigida
+const connectDB = require('./config/index');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 // Configuração de ambiente
@@ -31,5 +31,5 @@ app.use(notFound);
 app.use(errorHandler);
 
 // Inicializar o servidor
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
